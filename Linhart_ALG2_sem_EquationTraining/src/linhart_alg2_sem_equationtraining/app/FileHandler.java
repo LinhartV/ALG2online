@@ -28,10 +28,14 @@ public class FileHandler extends GlobalVars
     {
         try
         {
+            File dir = new File("data");
+            if(!dir.exists())
+            {
+                dir.mkdir();
+            }
             File file = new File(".\\data\\UserList.txt");
             file.createNewFile();
             file.setReadOnly();
-            //myObj.setWritable(true);
             String[] datas;
             Scanner myReader = new Scanner(file);
             while (myReader.hasNextLine()) 
@@ -223,21 +227,22 @@ public class FileHandler extends GlobalVars
      * 
      * All user data will be written to the file and the file will be set to read only
      */
-    public static void close()
+    public static void close() throws IOException
     {
-        try 
+        
+        File dir = new File("data");
+        if(!dir.exists())
         {
-            File file = new File(".\\data\\UserList.txt");
-            file.setWritable(true);
-            FileWriter myWriter = new FileWriter(file);
-            if(!l.isEmpty())
-                myWriter.write(displayUsers(false, null));
-            myWriter.close();
-            file.setReadOnly();
-        } 
-        catch (IOException e) 
-        {
-            
+            dir.mkdir();
         }
+        File file = new File(".\\data\\UserList.txt");
+        file.setWritable(true);
+        FileWriter myWriter = new FileWriter(file);
+        if(!l.isEmpty())
+            myWriter.write(displayUsers(false, null));
+        myWriter.close();
+        file.setReadOnly();
+        
+        
     }
 }
